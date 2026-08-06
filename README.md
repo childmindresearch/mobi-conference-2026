@@ -11,20 +11,16 @@ Welcome to the **Child Mind Institute's MoBI (Multimodal Brain/Body Imaging) Lab
 ## 📋 Table of Contents
 
 - [Overview](#overview)
-- [Publications, Abstracts & Posters](#publications-abstracts--posters)
+- [Abstracts & Posters](#publications-abstracts--posters)
 - [Software Tools & Repositories](#software-tools--repositories)
-- [Repository Directory Structure](#repository-directory-structure)
-- [How to Add New Tools or Materials](#how-to-add-new-tools-or-materials)
-- [Citation](#citation)
-- [License](#license)
 
 ---
 
 ## 🌐 Overview
 
-Mobile Brain-Body Imaging (MoBI) integrates electrophysiological recordings (EEG, fNIRS) with motion capture (MoCap), eye-tracking, and behavioral metrics to study human brain function in dynamic environments. This repository provides:
+CMI's Multimodal Brain-Body Imaging (MoBI) Laboratory integrates electrophysiological recordings (EEG, physio) with motion capture (MoCap), eye-tracking, and behavioral metrics to study human brain function in dynamic environments. This repository provides:
 - **Open-source software tools** for real-time visualization, quality control, and data acquisition.
-- **Academic posters & abstracts** (PDF format) presented at scientific conferences.
+- **Abstracts & posters** presented at the 6th International Mobile Brain/Body Imaging Conference.
 - **Direct links to individual tool repositories** for installation, usage guides, and source code.
 
 ---
@@ -47,7 +43,7 @@ Below is the structured catalog of our research outputs. The PDF files for each 
 ## 🛠️ Software Tools & Repositories
 
 ### 1. **MoBI-View: Realtime Biosignal Visualization**
-- **Repository**: [github.com/your-org/mobi-view](https://github.com/your-org/mobi-view)
+- **Repository**: [github.com/childmindresearch/Mobi-View)](https://github.com/childmindresearch/MoBI-View)
 - **Description**: An open-source visualization tool tailored for Lab Streaming Layer (LSL) streams, allowing researchers to monitor EEG, kinematic, and physiological signals in real time.
 - **Files**: [Abstract (PDF)](./abstracts/mobi_view_lsl_abstract.pdf) | [Poster (PDF)](./posters/mobi_view_lsl_poster.pdf)
 
