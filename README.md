@@ -29,14 +29,14 @@ CMI's Multimodal Brain-Body Imaging (MoBI) Laboratory integrates electrophysiolo
 
 Below is the structured catalog of our research outputs. The PDF files for each project are located in the [`abstracts/`](./abstracts/) and [`posters/`](./posters/) folders.
 
-| # | Title | Abstract (PDF) | Poster (PDF) | Tool Repository |
-|---|-------|:--------------:|:------------:|:---------------:|
-| **1** | **The Open Methodology MoBI Laboratory** | [![Abstract PDF](https://img.shields.io/badge/PDF-Abstract-red.svg)](./abstracts/open_methodology_mobi_lab_abstract.pdf) | [![Poster PDF](https://img.shields.io/badge/PDF-Poster-blue.svg)](./posters/open_methodology_mobi_lab_poster.pdf) | [🔗 MoBI Lab Methods](#) |
-| **2** | **MoBI-View: An Open-Source Realtime Biosignal Visualization Tool for LSL** | [![Abstract PDF](https://img.shields.io/badge/PDF-Abstract-red.svg)](./abstracts/mobi_view_lsl_abstract.pdf) | [![Poster PDF](https://img.shields.io/badge/PDF-Poster-blue.svg)](./posters/mobi_view_lsl_poster.pdf) | [🔗 MoBI-View Repo](https://github.com/your-org/mobi-view) |
-| **3** | **From Acquisition to Assurance: A Scalable Software Framework for Automated Quality Control in Multimodal Brain-Body Imaging** | [![Abstract PDF](https://img.shields.io/badge/PDF-Abstract-red.svg)](./abstracts/acquisition_to_assurance_qc_abstract.pdf) | [![Poster PDF](https://img.shields.io/badge/PDF-Poster-blue.svg)](./posters/acquisition_to_assurance_qc_poster.pdf) | [🔗 MoBI QC Framework](https://github.com/your-org/mobi-qc-framework) |
-| **4** | **Realtime Motion Capture as an Automated MoBI Quality Control Mechanism** | [![Abstract PDF](https://img.shields.io/badge/PDF-Abstract-red.svg)](./abstracts/realtime_mocap_qc_abstract.pdf) | [![Poster PDF](https://img.shields.io/badge/PDF-Poster-blue.svg)](./posters/realtime_mocap_qc_poster.pdf) | [🔗 MoCap QC Tool](https://github.com/your-org/mocap-qc) |
-| **5** | **Replication of Computerised Assessment of Motion Imitation (CAMI) Study with Neurodivergent Pediatric Population** | [![Abstract PDF](https://img.shields.io/badge/PDF-Abstract-red.svg)](./abstracts/cami_study_replication_abstract.pdf) | [![Poster PDF](https://img.shields.io/badge/PDF-Poster-blue.svg)](./posters/cami_study_replication_poster.pdf) | [🔗 CAMI Study Repo](https://github.com/your-org/cami-pediatric-study) |
-| **6** | **MoBI Laboratory In Practice: Examples from 2 studies** | [![Abstract PDF](https://img.shields.io/badge/PDF-Abstract-red.svg)](./abstracts/mobi_lab_in_practice_abstract.pdf) | [![Poster PDF](https://img.shields.io/badge/PDF-Poster-blue.svg)](./posters/mobi_lab_in_practice_poster.pdf) | [🔗 Practice Examples](https://github.com/your-org/mobi-practice-examples) |
+| # | Title | Abstract (PDF) | Poster (PDF) |
+|---|-------|:--------------:|:------------:|
+| **1** | **The Open Methodology MoBI Laboratory** | [![Abstract PDF](https://img.shields.io/badge/PDF-Abstract-red.svg)](./abstracts/open_methodology_mobi_lab_abstract.pdf) | [![Poster PDF](https://img.shields.io/badge/PDF-Poster-blue.svg)](./posters/open_methodology_mobi_lab_poster.pdf) |
+| **2** | **MoBI-View: An Open-Source Realtime Biosignal Visualization Tool for LSL** | [![Abstract PDF](https://img.shields.io/badge/PDF-Abstract-red.svg)](./abstracts/mobi_view_lsl_abstract.pdf) | [![Poster PDF](https://img.shields.io/badge/PDF-Poster-blue.svg)](./posters/mobi_view_lsl_poster.pdf) |
+| **3** | **From Acquisition to Assurance: A Scalable Software Framework for Automated Quality Control in Multimodal Brain-Body Imaging** | [![Abstract PDF](https://img.shields.io/badge/PDF-Abstract-red.svg)](./abstracts/acquisition_to_assurance_qc_abstract.pdf) | [![Poster PDF](https://img.shields.io/badge/PDF-Poster-blue.svg)](./posters/acquisition_to_assurance_qc_poster.pdf) |
+| **4** | **Realtime Motion Capture as an Automated MoBI Quality Control Mechanism** | [![Abstract PDF](https://img.shields.io/badge/PDF-Abstract-red.svg)](./abstracts/realtime_mocap_qc_abstract.pdf) | [![Poster PDF](https://img.shields.io/badge/PDF-Poster-blue.svg)](./posters/realtime_mocap_qc_poster.pdf) |
+| **5** | **Replication of Computerised Assessment of Motion Imitation (CAMI) Study with Neurodivergent Pediatric Population** | [![Abstract PDF](https://img.shields.io/badge/PDF-Abstract-red.svg)](./abstracts/cami_study_replication_abstract.pdf) | [![Poster PDF](https://img.shields.io/badge/PDF-Poster-blue.svg)](./posters/cami_study_replication_poster.pdf) |
+| **6** | **MoBI Laboratory In Practice: Examples from 2 studies** | [![Abstract PDF](https://img.shields.io/badge/PDF-Abstract-red.svg)](./abstracts/mobi_lab_in_practice_abstract.pdf) | [![Poster PDF](https://img.shields.io/badge/PDF-Poster-blue.svg)](./posters/mobi_lab_in_practice_poster.pdf) |
 
 ---
 
@@ -45,6 +45,7 @@ Below is the structured catalog of our research outputs. The PDF files for each 
 ### 1. **MoBI Laboratory Open Methodology & In-Practice Examples**
 - **Description**: Practical implementations, experimental protocols, and case studies demonstrating MoBI methodology in action across multiple experimental paradigms.
 - **Files**:
+  - *MoBI Open-Source Documentation*: [MoBI-Docs](https://childmindresearch.github.io/MoBI_Docs)
   - *The Open Methodology MoBI Laboratory*: [Abstract (PDF)](./abstracts/open_methodology_mobi_lab_abstract.pdf) | [Poster (PDF)](./posters/open_methodology_mobi_lab_poster.pdf)
   - *MoBI Laboratory In Practice*: [Abstract (PDF)](./abstracts/mobi_lab_in_practice_abstract.pdf) | [Poster (PDF)](./posters/mobi_lab_in_practice_poster.pdf)
 
