@@ -1,0 +1,1398 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MoBI Lab Dashboard | MoBI Conference 2026</title>
+  <style>
+    /* ==========================================================================
+       OFFLINE STYLES - 100% Standalone, No External Dependencies
+       ========================================================================== */
+    :root {
+      --bg-dark: #0b0f19;
+      --bg-card: rgba(21, 32, 54, 0.75);
+      --bg-card-hover: rgba(33, 49, 81, 0.85);
+      --border-color: rgba(255, 255, 255, 0.12);
+      --accent-primary: #38bdf8;
+      --accent-secondary: #818cf8;
+      --accent-booth: #f59e0b;
+      --accent-poster: #10b981;
+      --accent-lsl: #ec4899;
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --font-stack: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: var(--font-stack);
+      background-color: var(--bg-dark);
+      color: var(--text-main);
+      line-height: 1.6;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Header */
+    header {
+      background: linear-gradient(135deg, rgba(21, 32, 54, 0.95), rgba(11, 15, 25, 0.95));
+      border-bottom: 1px solid var(--border-color);
+      backdrop-filter: blur(12px);
+      padding: 1.25rem 2rem;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+    }
+
+    .header-title-group {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      cursor: pointer;
+    }
+
+    .cmi-logo-img-mini {
+      width: 44px;
+      height: 44px;
+      border-radius: 10px;
+      object-fit: cover;
+      box-shadow: 0 4px 12px rgba(56, 189, 248, 0.3);
+      flex-shrink: 0;
+      background-color: #ffffff;
+      padding: 2px;
+    }
+
+    .header-text h1 {
+      font-size: 1.45rem;
+      font-weight: 800;
+      background: linear-gradient(to right, var(--accent-primary), var(--accent-secondary));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      letter-spacing: -0.02em;
+    }
+
+    .header-subtitle {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+
+    .header-badges {
+      display: flex;
+      gap: 0.6rem;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.3rem 0.8rem;
+      border-radius: 9999px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .badge-booth {
+      background-color: rgba(245, 158, 11, 0.18);
+      color: var(--accent-booth);
+      border: 1px solid rgba(245, 158, 11, 0.4);
+    }
+
+    .badge-poster {
+      background-color: rgba(16, 185, 129, 0.18);
+      color: var(--accent-poster);
+      border: 1px solid rgba(16, 185, 129, 0.4);
+    }
+
+    .badge-lsl {
+      background-color: rgba(236, 72, 153, 0.18);
+      color: var(--accent-lsl);
+      border: 1px solid rgba(236, 72, 153, 0.4);
+    }
+
+    /* Main Container */
+    .dashboard-container {
+      display: flex;
+      flex: 1;
+      overflow: hidden;
+    }
+
+    /* Sidebar Navigation */
+    sidebar {
+      width: 360px;
+      background-color: rgba(11, 15, 25, 0.75);
+      border-right: 1px solid var(--border-color);
+      padding: 1.5rem 1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+      overflow-y: auto;
+      flex-shrink: 0;
+    }
+
+    .filter-tabs {
+      display: flex;
+      background: rgba(21, 32, 54, 0.8);
+      padding: 0.25rem;
+      border-radius: 8px;
+      border: 1px solid var(--border-color);
+    }
+
+    .filter-btn {
+      flex: 1;
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      padding: 0.5rem;
+      font-size: 0.78rem;
+      font-weight: 600;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .filter-btn.active {
+      background-color: var(--accent-primary);
+      color: #0b0f19;
+    }
+
+    .home-nav-item {
+      padding: 0.85rem 1rem;
+      border-radius: 10px;
+      background: linear-gradient(135deg, rgba(56, 189, 248, 0.15), rgba(129, 140, 248, 0.15));
+      border: 1px solid rgba(56, 189, 248, 0.3);
+      color: var(--text-main);
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      transition: all 0.2s ease;
+    }
+
+    .home-nav-item:hover, .home-nav-item.active {
+      background: linear-gradient(135deg, rgba(56, 189, 248, 0.25), rgba(129, 140, 248, 0.25));
+      border-color: var(--accent-primary);
+      transform: translateX(4px);
+    }
+
+    .project-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+      list-style: none;
+    }
+
+    .project-item {
+      padding: 1rem;
+      border-radius: 10px;
+      background-color: var(--bg-card);
+      border: 1px solid var(--border-color);
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .project-item:hover {
+      background-color: var(--bg-card-hover);
+      transform: translateX(4px);
+    }
+
+    .project-item.active {
+      border-color: var(--accent-primary);
+      background-color: rgba(56, 189, 248, 0.12);
+      box-shadow: 0 0 15px rgba(56, 189, 248, 0.15);
+    }
+
+    .project-item-title {
+      font-size: 0.95rem;
+      font-weight: 700;
+      margin-bottom: 0.4rem;
+      color: var(--text-main);
+      line-height: 1.35;
+    }
+
+    .project-item-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    /* Content Area */
+    main {
+      flex: 1;
+      padding: 2rem;
+      overflow-y: auto;
+    }
+
+    .content-card {
+      background-color: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 14px;
+      padding: 2.2rem;
+      box-shadow: 0 12px 35px rgba(0, 0, 0, 0.4);
+      max-width: 1050px;
+      margin: 0 auto;
+    }
+
+    /* Landing Page Specific Styles */
+    .hero-banner {
+      background: linear-gradient(135deg, rgba(56, 189, 248, 0.1), rgba(129, 140, 248, 0.1));
+      border: 1px solid rgba(56, 189, 248, 0.3);
+      border-radius: 12px;
+      padding: 2.2rem;
+      text-align: center;
+      margin-bottom: 2rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .cmi-logo-img-large {
+      width: 90px;
+      height: 90px;
+      border-radius: 20px;
+      object-fit: cover;
+      box-shadow: 0 8px 25px rgba(56, 189, 248, 0.3);
+      margin-bottom: 1rem;
+      background-color: #ffffff;
+      padding: 4px;
+    }
+
+    .hero-banner h2 {
+      font-size: 2.2rem;
+      font-weight: 800;
+      color: var(--text-main);
+      margin-bottom: 0.5rem;
+      line-height: 1.25;
+    }
+
+    .hero-banner p {
+      color: var(--text-muted);
+      font-size: 1.1rem;
+      max-width: 750px;
+      margin: 0 auto 1.5rem auto;
+    }
+
+    .qr-banner-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+      align-items: stretch;
+    }
+
+    .qr-card {
+      background: rgba(11, 15, 25, 0.7);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 1rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+    }
+
+    .qr-code-img {
+      width: 100%;
+      height: 100%;
+      max-width: 100%;
+      max-height: 100%;
+      border-radius: 12px;
+      object-fit: contain;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.5);
+      background-color: #ffffff;
+      padding: 10px;
+      cursor: pointer;
+      transition: transform 0.2s ease;
+    }
+
+    .qr-code-img:hover {
+      transform: scale(1.04);
+    }
+
+    /* Modalities & Hardware Tags */
+    .modality-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+      margin-top: 0.8rem;
+      margin-bottom: 2rem;
+    }
+
+    .modality-pill {
+      background-color: rgba(15, 23, 42, 0.8);
+      border: 1px solid var(--border-color);
+      color: #e2e8f0;
+      padding: 0.45rem 0.9rem;
+      border-radius: 8px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .modality-pill::before {
+      content: "⚡";
+      font-size: 0.8rem;
+    }
+
+    /* Calendar Grid */
+    .calendar-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 1.25rem;
+      margin-bottom: 2rem;
+    }
+
+    .calendar-day-card {
+      background-color: rgba(11, 15, 25, 0.6);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 1.25rem;
+    }
+
+    .calendar-day-header {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--accent-primary);
+      margin-bottom: 0.8rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid var(--border-color);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .calendar-item {
+      background-color: rgba(21, 32, 54, 0.6);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 8px;
+      padding: 0.75rem 0.9rem;
+      margin-bottom: 0.6rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .calendar-item:hover {
+      border-color: var(--accent-primary);
+      transform: translateX(3px);
+    }
+
+    .calendar-item-id {
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--accent-poster);
+      margin-bottom: 0.2rem;
+    }
+
+    .calendar-item-title {
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: var(--text-main);
+      line-height: 1.3;
+    }
+
+    /* Attendees Grid */
+    .attendees-section {
+      margin-bottom: 2rem;
+    }
+
+    .attendees-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+
+    .attendee-card {
+      background-color: rgba(11, 15, 25, 0.6);
+      border: 1px solid var(--border-color);
+      border-radius: 10px;
+      padding: 1.2rem 1rem;
+      text-align: center;
+      transition: transform 0.2s ease;
+    }
+
+    .attendee-card:hover {
+      transform: translateY(-3px);
+      border-color: var(--accent-primary);
+    }
+
+    .attendee-avatar {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, rgba(56, 189, 248, 0.2), rgba(129, 140, 248, 0.2));
+      border: 1px solid rgba(56, 189, 248, 0.4);
+      color: var(--accent-primary);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+      font-weight: 800;
+      margin-bottom: 0.6rem;
+    }
+
+    .attendee-name {
+      font-weight: 700;
+      color: var(--text-main);
+      font-size: 0.95rem;
+    }
+
+    /* Contact Cards */
+    .contact-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1rem;
+      margin-top: 1rem;
+      margin-bottom: 2rem;
+    }
+
+    .contact-card {
+      background-color: rgba(11, 15, 25, 0.6);
+      border: 1px solid var(--border-color);
+      border-radius: 10px;
+      padding: 1.2rem 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      transition: all 0.2s ease;
+    }
+
+    .contact-card:hover {
+      border-color: var(--accent-primary);
+      transform: translateY(-2px);
+    }
+
+    .contact-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 10px;
+      background: rgba(16, 185, 129, 0.18);
+      color: var(--accent-poster);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+      flex-shrink: 0;
+    }
+
+    .contact-name {
+      font-weight: 700;
+      font-size: 1rem;
+      color: var(--text-main);
+    }
+
+    .contact-email {
+      color: var(--accent-primary);
+      text-decoration: none;
+      font-size: 0.88rem;
+      font-weight: 500;
+    }
+
+    .contact-email:hover {
+      text-decoration: underline;
+    }
+
+    .quick-stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+
+    .stat-card {
+      background-color: rgba(11, 15, 25, 0.6);
+      border: 1px solid var(--border-color);
+      border-radius: 10px;
+      padding: 1.2rem;
+      text-align: center;
+    }
+
+    .stat-value {
+      font-size: 2rem;
+      font-weight: 800;
+      color: var(--accent-primary);
+      margin-bottom: 0.2rem;
+    }
+
+    .stat-label {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      font-weight: 600;
+    }
+
+    .featured-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.2rem;
+      margin-top: 1rem;
+    }
+
+    .featured-card {
+      background-color: rgba(11, 15, 25, 0.6);
+      border: 1px solid var(--border-color);
+      border-radius: 10px;
+      padding: 1.25rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .featured-card:hover {
+      border-color: var(--accent-primary);
+      transform: translateY(-3px);
+      background-color: rgba(21, 32, 54, 0.9);
+    }
+
+    .featured-card-title {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--text-main);
+      margin-bottom: 0.5rem;
+    }
+
+    .featured-card-desc {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+
+    /* Common Card Styles */
+    .project-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 1.5rem;
+      margin-bottom: 1.5rem;
+      border-bottom: 1px solid var(--border-color);
+      padding-bottom: 1.5rem;
+      flex-wrap: wrap;
+    }
+
+    .project-title-group {
+      flex: 1;
+      min-width: 280px;
+    }
+
+    .project-title-group h2 {
+      font-size: 1.85rem;
+      font-weight: 800;
+      margin-top: 0.4rem;
+      margin-bottom: 0.5rem;
+      color: var(--text-main);
+      line-height: 1.25;
+    }
+
+    .project-authors {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .github-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      background: linear-gradient(135deg, #24292e, #1b1f23);
+      color: #ffffff;
+      padding: 0.65rem 1.3rem;
+      border-radius: 8px;
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 600;
+      transition: all 0.2s ease;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    }
+
+    .github-link:hover {
+      background: linear-gradient(135deg, #33383e, #24292e);
+      transform: translateY(-2px);
+      border-color: var(--accent-primary);
+    }
+
+    .pdf-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background-color: rgba(16, 185, 129, 0.2);
+      color: var(--accent-poster);
+      border: 1px solid rgba(16, 185, 129, 0.5);
+      padding: 0.65rem 1.3rem;
+      border-radius: 8px;
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 600;
+      transition: all 0.2s ease;
+      margin-top: 0.8rem;
+    }
+
+    .pdf-btn:hover {
+      background-color: rgba(16, 185, 129, 0.35);
+      transform: translateY(-2px);
+    }
+
+    .section-title {
+      font-size: 1.15rem;
+      font-weight: 700;
+      margin: 1.8rem 0 1rem 0;
+      color: var(--accent-primary);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      letter-spacing: 0.01em;
+    }
+
+    .description-text {
+      color: #cbd5e1;
+      font-size: 1.05rem;
+      line-height: 1.7;
+      margin-bottom: 1.5rem;
+    }
+
+    /* Feature Grid / Bullet Points */
+    .feature-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 0.8rem;
+      margin-bottom: 1.5rem;
+      list-style: none;
+    }
+
+    .feature-item {
+      background-color: rgba(11, 15, 25, 0.5);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      padding: 0.8rem 1rem;
+      border-radius: 8px;
+      color: #e2e8f0;
+      font-size: 0.95rem;
+      display: flex;
+      align-items: flex-start;
+      gap: 0.6rem;
+    }
+
+    .feature-item::before {
+      content: "✦";
+      color: var(--accent-secondary);
+      font-weight: bold;
+    }
+
+    /* Highlight Card (e.g., LSL Integration) */
+    .highlight-card {
+      background: linear-gradient(135deg, rgba(236, 72, 153, 0.1), rgba(129, 140, 248, 0.1));
+      border: 1px solid rgba(236, 72, 153, 0.3);
+      border-radius: 10px;
+      padding: 1.25rem 1.5rem;
+      margin: 1.5rem 0;
+    }
+
+    .highlight-card h4 {
+      color: var(--accent-lsl);
+      font-size: 1.05rem;
+      font-weight: 700;
+      margin-bottom: 0.6rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .highlight-card p {
+      color: #cbd5e1;
+      font-size: 0.95rem;
+      margin-bottom: 0.8rem;
+    }
+
+    .highlight-card ul {
+      list-style-type: none;
+      padding-left: 0.2rem;
+    }
+
+    .highlight-card li {
+      position: relative;
+      padding-left: 1.2rem;
+      margin-bottom: 0.4rem;
+      color: #e2e8f0;
+      font-size: 0.9rem;
+    }
+
+    .highlight-card li::before {
+      content: "•";
+      position: absolute;
+      left: 0;
+      color: var(--accent-lsl);
+      font-weight: bold;
+    }
+
+    /* Poster Container */
+    .poster-box {
+      background-color: rgba(11, 15, 25, 0.8);
+      border: 2px dashed var(--accent-poster);
+      border-radius: 12px;
+      padding: 1.5rem;
+      text-align: center;
+      margin-top: 1rem;
+    }
+
+    .pdf-embed {
+      width: 100%;
+      height: 600px;
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      background-color: #0b0f19;
+    }
+
+    /* Lightbox Modal */
+    .modal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background-color: rgba(0,0,0,0.92);
+      z-index: 1000;
+      justify-content: center;
+      align-items: center;
+      padding: 2rem;
+    }
+
+    .modal.active {
+      display: flex;
+    }
+
+    .modal-content {
+      max-width: 92vw;
+      max-height: 92vh;
+      border-radius: 8px;
+      object-fit: contain;
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 1.5rem;
+      right: 2rem;
+      color: #fff;
+      font-size: 2.2rem;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    /* Responsive */
+    @media (max-width: 850px) {
+      .dashboard-container {
+        flex-direction: column;
+      }
+      sidebar {
+        width: 100%;
+        max-height: 340px;
+      }
+      .qr-banner-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header>
+    <div class="header-title-group" onclick="selectProject('home')">
+      <img src="images/cmi_logo.png" alt="Child Mind Institute Logo" class="cmi-logo-img-mini" onerror="this.onerror=null; this.src='https://avatars.githubusercontent.com/u/25083582?s=280&v=4';">
+      <div class="header-text">
+        <h1>Multimodal Brain/Body Imaging Lab</h1>
+        <div class="header-subtitle">Child Mind Institute — MoBI Conference 2026</div>
+      </div>
+    </div>
+    <div class="header-badges">
+      <span class="badge badge-booth">3 Booth Demos</span>
+      <span class="badge badge-poster">6 Poster Presentations</span>
+      <span class="badge badge-lsl">LSL Synchronized</span>
+    </div>
+  </header>
+
+  <!-- Main Layout -->
+  <div class="dashboard-container">
+    <!-- Sidebar / Navigation -->
+    <sidebar>
+      <div class="home-nav-item" id="homeNavItem" onclick="selectProject('home')">
+        <span>🏠 Lab Overview & Team</span>
+        <span>→</span>
+      </div>
+
+      <div class="filter-tabs">
+        <button class="filter-btn active" id="btnAll" onclick="filterProjects('all')">All Work (9)</button>
+        <button class="filter-btn" id="btnBooth" onclick="filterProjects('booth')">Demos (3)</button>
+        <button class="filter-btn" id="btnPoster" onclick="filterProjects('poster')">Posters (6)</button>
+      </div>
+
+      <ul class="project-list" id="projectList">
+        <!-- Rendered via JS -->
+      </ul>
+    </sidebar>
+
+    <!-- Main Content Display -->
+    <main>
+      <div class="content-card" id="projectDetails">
+        <!-- Rendered via JS -->
+      </div>
+    </main>
+  </div>
+
+  <!-- Image/Poster Lightbox Modal -->
+  <div class="modal" id="imageModal" onclick="closeModal()">
+    <span class="modal-close">&times;</span>
+    <img class="modal-content" id="modalImg" src="" alt="Enlarged view">
+  </div>
+
+  <script>
+    /* ==========================================================================
+       PROJECT DATA STRUCTURE - POPULATED WITH MOBI LAB DEMOS & POSTERS
+       ========================================================================== */
+    const labAttendees = [
+      { name: "John Vito", icon: "JV" },
+      { name: "Nathalia Bianchini Esper", icon: "NE" },
+      { name: "Nicole Burke", icon: "NB" },
+      { name: "Bryan Gonzalez", icon: "BG" },
+      { name: "Adam Santorelli", icon: "AS" }
+    ];
+
+    const labContacts = [
+      { name: "John Vito", email: "john.vito@childmind.org", icon: "✉️" },
+      { name: "Nathalia Bianchini Esper", email: "nathalia.esper@childmind.org", icon: "✉️" }
+    ];
+
+    const labModalities = [
+      "Lab Streaming Layer (LSL)",
+      "High-Density EEG",
+      "Eye-Tracking",
+      "3D Stereoscopic Mocap (ZED 2i)",
+      "Kinect Motion Capture",
+      "Audio-Visual LSL Streams",
+      "ECG & EDA Biosignals",
+      "Automated Quality Control (MOBI-QC)"
+    ];
+
+    const projectsData = [
+      // ------------------------------------------------------------------------
+      // BOOTH DEMOS
+      // ------------------------------------------------------------------------
+      {
+        id: "demo-mobi-av",
+        title: "MoBI Audio & Video",
+        type: "booth",
+        badgeText: "Booth Demo",
+        sidebarMeta: "Booth Demo",
+        posterSession: null,
+        authors: "Iktae Kim, Adam Santorelli, Nathalia Bianchini Esper, John Vito",
+        github: "https://github.com/childmindresearch/MoBI-AV",
+        description: "A simple application for recording audio and video simultaneously with device selection and synchronization capabilities.",
+        features: [
+          "Record audio and video separately or together",
+          "Select from available audio and video inputs",
+          "Configurable recording parameters",
+          "Visual status indicators",
+          "Lab Streaming Layer (LSL) integration for precise synchronization"
+        ],
+        lslHighlight: {
+          title: "⚡ Main Feature: Lab Streaming Layer (LSL) Integration",
+          description: "This application features Lab Streaming Layer (LSL) integration for synchronizing recordings with other data streams:",
+          bullets: [
+            "Automatically creates two LSL marker streams (audio and video) when the application launches",
+            "Streams event markers for recording start/stop events with detailed metadata",
+            "Audio markers include: subject ID, filename, timestamp, channels, and sample rate",
+            "Video markers include: subject ID, filename, timestamp, precise ISO timestamp, and fps",
+            "Marker stream names and sampling rates are configurable in config.json",
+            "Useful for time-synchronizing recordings with other experimental data sources"
+          ]
+        },
+        poster: null,
+        images: []
+      },
+      {
+        id: "demo-mobi-view",
+        title: "MoBI View",
+        type: "booth",
+        badgeText: "Booth Demo",
+        sidebarMeta: "Booth Demo",
+        authors: "Iktae Kim, Adam Santorelli, Nathalia Bianchini Esper, John Vito",
+        github: "https://github.com/childmindresearch/MoBI-View",
+        description: "A real-time biosignal visualization tool for Lab Streaming Layer (LSL) streams.",
+        features: [
+          "Real-time signal visualization from any LSL-compatible device streaming numerical data",
+          "Multi-stream support for simultaneous monitoring of different data sources",
+          "Specialized plot types optimized for different signal types",
+          "EEG plot widgets for neurophysiological data",
+          "Numeric plot widgets for other sensor data",
+          "Channel / Stream visibility control for focusing on specific data channels",
+          "Hierarchical stream organization through a tree-based interface",
+          "Automatic stream discovery across local networks"
+        ],
+        poster: null,
+        images: []
+      },
+      {
+        id: "demo-mobi-keylogger",
+        title: "MoBI Keylogger",
+        type: "booth",
+        badgeText: "Booth Demo",
+        sidebarMeta: "Booth Demo",
+        authors: "Iktae Kim, Adam Santorelli, Nathalia Bianchini Esper, John Vito",
+        github: "https://github.com/childmindresearch/keylog-lsl",
+        description: "A Python tool for publishing global keyboard events over Lab Streaming Layer (LSL).",
+        features: [
+          "Publishes key press and release events to a KeyboardEvents LSL stream",
+          "Stores normalized key names and wall-clock timestamps in JSON markers",
+          "Ideal for behavioral synchronization with continuous physiological signals"
+        ],
+        poster: null,
+        images: []
+      },
+
+      // ------------------------------------------------------------------------
+      // POSTER PRESENTATIONS (1 TO 6)
+      // ------------------------------------------------------------------------
+      {
+        id: "poster-1",
+        title: "The Open Methodology MoBI Laboratory",
+        type: "poster",
+        badgeText: "Poster Presentation • ID A-IV-03",
+        sidebarMeta: "ID A-IV-03 • Session A",
+        posterSession: "Poster ID A-IV-03, Poster Session A, Wed 26 Aug 2026",
+        authors: "Nicole Burke, Nathalia Bianchini Esper, John Vito",
+        github: "https://github.com/childmindresearch/mobi-conference-2026/tree/main/posters/open_methodology_mobi_lab_poster.pdf",
+        description: "An open-source methodology framework and reproducible laboratory infrastructure for Mobile Brain/Body Imaging (MoBI) research across international collection sites.",
+        features: [
+          "Eliminates heavy hardware complexity (3–5 PC towers) and manual multi-device start/stop sequences",
+          "Unified LSL high-precision system clock achieving sub-millisecond real-time hardware alignment",
+          "Automated QA/QC open-source batch processing for instant protocol length & signal integrity checks",
+          "Eliminates offline timestamp alignment and manual cross-device time drift correction",
+          "Impact: 5x successful international lab replications (USA, Brazil, South Africa), ~30% cost reduction, and 8 open-source software tools"
+        ],
+        poster: "posters/open_methodology_mobi_lab_poster.pdf",
+        posterUrl: "https://github.com/childmindresearch/mobi-conference-2026/tree/main/posters/open_methodology_mobi_lab_poster.pdf",
+        images: []
+      },
+      {
+        id: "poster-2",
+        title: "MoBI-View: An Open-Source Realtime Biosignal Visualization Tool for LSL",
+        type: "poster",
+        badgeText: "Poster Presentation • ID A-III-07",
+        sidebarMeta: "ID A-III-07 • Session A",
+        posterSession: "Poster A-III-07, Poster Session A, Wed 26 Aug 2026",
+        authors: "Iktae Kim, Adam Santorelli, Nathalia Bianchini Esper, John Vito",
+        github: "https://github.com/childmindresearch/mobi-conference-2026/blob/main/posters/mobi_view_lsl_poster.pdf",
+        description: "A cross-platform browser interface for real-time monitoring and dynamic visualization of synchronized multimodal LSL streams.",
+        features: [
+          "Prevents late error detection and fragmented visualization across decoupled acquisition software",
+          "Architecture decouples Python/LSL acquisition core from web browser frontend using WebSockets",
+          "No runtime web-application server required — powered by lightweight Svelte + uPlot engine",
+          "Interactive controls for stream discovery, channel visibility toggles, and customized EEG/physio plot widgets",
+          "Ensures intra-session data integrity for combined EEG, eye-tracking, and physiological sensors"
+        ],
+        poster: "posters/mobi_view_lsl_poster.pdf",
+        posterUrl: "https://github.com/childmindresearch/mobi-conference-2026/blob/main/posters/mobi_view_lsl_poster.pdf",
+        images: []
+      },
+      {
+        id: "poster-3",
+        title: "From Acquisition to Assurance: Scalable Software Framework for Automated Quality Control in Multimodal Brain-Body Imaging",
+        type: "poster",
+        badgeText: "Poster Presentation • ID A-IV-06",
+        sidebarMeta: "ID A-IV-06 • Session A",
+        posterSession: "Poster ID A-IV-06, Poster Session A, Wed 26 Aug 2026",
+        authors: "Bryan Gonzalez, John Vito",
+        github: "https://github.com/childmindresearch/mobi-conference-2026/blob/main/posters/acquisition_to_assurance_qc_poster.pdf",
+        description: "The MOBI-QC framework: a fully automated pipeline for batch processing and instant quality control of large-scale multimodal .xdf recordings.",
+        features: [
+          "Prevents costly data loss, sensor drift, and equipment malfunctions before post-hoc analysis",
+          "EEG QC: Ocular/myogenic artifact annotation, pyPREP RANSAC channel assessment, 60 Hz line noise filtering, and ICA sample rejection",
+          "Eye-Tracking & Physio QC: 3D gaze validity, L/R gaze distance drift plots, ECG SNR, Respiration rates, and EDA SCR features",
+          "Audio-Visual & Behavioral QC: LSL vs. file duration alignment, microphone statistics, frame-rate stability, Laplacian sharpness, and marker completeness",
+          "Standardized defaults based on extensive literature review with exposed threshold customization"
+        ],
+        poster: "posters/acquisition_to_assurance_qc_poster.pdf",
+        posterUrl: "https://github.com/childmindresearch/mobi-conference-2026/blob/main/posters/acquisition_to_assurance_qc_poster.pdf",
+        images: []
+      },
+      {
+        id: "poster-4",
+        title: "Realtime Motion Capture as an Automated MoBI Quality Control Mechanism",
+        type: "poster",
+        badgeText: "Poster Presentation • ID A-IV-11",
+        sidebarMeta: "ID A-IV-11 • Session A",
+        posterSession: "Poster ID A-IV-11, Poster Session A, Wed 26 Aug 2026",
+        authors: "Celia Maiorano, Adam Santorelli, Nathalia Bianchini Esper, John Vito",
+        github: "https://github.com/childmindresearch/mobi-conference-2026/blob/main/posters/realtime_mocap_qc_poster.pdf",
+        description: "Markerless 3D upper-body skeletal tracking using Stereolabs ZED 2i stereo camera for automated movement artifact classification in pediatric populations.",
+        features: [
+          "Disambiguates technical sensor failures from movement-related artifacts and within-session fidgeting in pediatric ADHD/ASD participants",
+          "Operates continuously at 30 Hz without restricting movement or requiring wearable sensors",
+          "Core Outputs: Fidgeting Intensity Score, Postural Shift Detection, and Head Direction Vectors",
+          "Real-time event streaming via LSL for instant trial rejection and behavioral phenotyping",
+          "Open-source Python pipeline using the uv package manager"
+        ],
+        poster: "posters/realtime_mocap_qc_poster.pdf",
+        posterUrl: "https://github.com/childmindresearch/mobi-conference-2026/blob/main/posters/realtime_mocap_qc_poster.pdf",
+        images: []
+      },
+      {
+        id: "poster-5",
+        title: "Replication of Computerised Assessment of Motion Imitation (CAMI) Study with Neurodivergent Pediatric Population",
+        type: "poster",
+        badgeText: "Poster Presentation • ID B-III-06",
+        sidebarMeta: "ID B-III-06 • Session B",
+        posterSession: "Poster ID B-III-06, Poster Session B, Thu 27 Aug 2026",
+        authors: "Apurva Gokhe, Nathalia Bianchini Esper, John Vito",
+        github: "https://github.com/childmindresearch/mobi-conference-2026/blob/main/posters/cami_study_replication_poster.pdf",
+        description: "Objective evaluation of motor imitation performance in a pediatric neurodivergent cohort (N = 50, Mean Age = 10.37 yrs) using Microsoft Kinect motion capture.",
+        features: [
+          "Replaces time-consuming, error-prone human observation coding (HOC) with continuous computerized CAMI scores",
+          "Evaluated motion imitation across two dance sequences at 100% and 60% playback speeds",
+          "Key Finding 1: Similar imitation performance between children with ADHD (with/without heterotypic comorbidities such as Anxiety) and neurotypical peers",
+          "Key Finding 2: No correlation observed between CAMI scores and age or cognitive assessment scores",
+          "Takeaway: Motion imitation deficits measured by CAMI are specific to ASD and are not observed in children with ADHD regardless of comorbidities"
+        ],
+        poster: "posters/cami_study_replication_poster.pdf",
+        posterUrl: "https://github.com/childmindresearch/mobi-conference-2026/blob/main/posters/cami_study_replication_poster.pdf",
+        images: []
+      },
+      {
+        id: "poster-6",
+        title: "MoBI Laboratory In Practice: Examples from 2 studies",
+        type: "poster",
+        badgeText: "Poster Presentation • ID A-IV-02",
+        sidebarMeta: "ID A-IV-02 • Session A",
+        posterSession: "Poster ID A-IV-02, Poster Session A, Wed 26 Aug 2026",
+        authors: "Nicole Burke, John Vito",
+        github: "https://github.com/childmindresearch/mobi-conference-2026/blob/main/posters/mobi_lab_in_practice_poster.pdf",
+        description: "Real-world laboratory deployment and preliminary findings from two ongoing MoBI studies: Graphomotor Control and Auditory-Motor Synchronization.",
+        features: [
+          "Demonstrates single-computer LSL infrastructure collecting graphomotor drawing data and eye-tracking simultaneously",
+          "All data streams are temporally synchronized at acquisition, eliminating tedious post-hoc data alignment",
+          "Provides rich, complementary neurobehavioral data unachievable via single-modality approaches",
+          "Impact: 5 operational MoBI laboratories constructed to date with active data collection ongoing"
+        ],
+        poster: "posters/mobi_lab_in_practice_poster.pdf",
+        posterUrl: "https://github.com/childmindresearch/mobi-conference-2026/blob/main/posters/mobi_lab_in_practice_poster.pdf",
+        images: []
+      }
+    ];
+
+    let currentFilter = 'all';
+    let currentSelectedId = 'home'; // Default landing page
+
+    function renderProjectList() {
+      const listContainer = document.getElementById('projectList');
+      listContainer.innerHTML = '';
+
+      const filtered = projectsData.filter(p => currentFilter === 'all' || p.type === currentFilter);
+
+      filtered.forEach(project => {
+        const li = document.createElement('li');
+        li.className = `project-item ${project.id === currentSelectedId ? 'active' : ''}`;
+        li.onclick = () => selectProject(project.id);
+
+        const badgeClass = project.type === 'booth' ? 'badge-booth' : 'badge-poster';
+
+        li.innerHTML = `
+          <div class="project-item-title">${escapeHtml(project.title)}</div>
+          <div class="project-item-meta">
+            <span class="badge ${badgeClass}">${project.type === 'booth' ? 'Demo' : 'Poster'}</span>
+            <span style="font-weight:600; color:var(--text-muted);">${escapeHtml(project.sidebarMeta || '')}</span>
+          </div>
+        `;
+        listContainer.appendChild(li);
+      });
+    }
+
+    function selectProject(id) {
+      currentSelectedId = id;
+
+      const homeItem = document.getElementById('homeNavItem');
+      if (id === 'home') {
+        homeItem.classList.add('active');
+      } else {
+        homeItem.classList.remove('active');
+      }
+
+      renderProjectList();
+      renderProjectDetails();
+    }
+
+    function filterProjects(filterType) {
+      currentFilter = filterType;
+      document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+
+      if (filterType === 'all') document.getElementById('btnAll').classList.add('active');
+      if (filterType === 'booth') document.getElementById('btnBooth').classList.add('active');
+      if (filterType === 'poster') document.getElementById('btnPoster').classList.add('active');
+
+      const filtered = projectsData.filter(p => currentFilter === 'all' || p.type === currentFilter);
+      if (currentSelectedId !== 'home' && filtered.length > 0 && !filtered.some(p => p.id === currentSelectedId)) {
+        currentSelectedId = filtered[0].id;
+      }
+      renderProjectList();
+      renderProjectDetails();
+    }
+
+    function renderProjectDetails() {
+      const detailsContainer = document.getElementById('projectDetails');
+
+      // LANDING PAGE VIEW
+      if (currentSelectedId === 'home') {
+        detailsContainer.innerHTML = `
+          <div class="qr-banner-grid">
+            <div class="hero-banner" style="margin-bottom:0;">
+              <img src="images/cmi_logo.png" alt="Child Mind Institute Logo" class="cmi-logo-img-large" onerror="this.onerror=null; this.src='https://avatars.githubusercontent.com/u/25083582?s=280&v=4';">
+              <h2>Multimodal Brain/Body Imaging Lab</h2>
+              <p>Child Mind Institute — MoBI Conference 2026 Presentation Hub</p>
+            </div>
+
+            <div class="qr-card">
+              <img src="images/qr_code.png" alt="Scan QR Code to visit repository" class="qr-code-img" onclick="openModal(this.src)">
+            </div>
+          </div>
+
+          <div class="quick-stats-grid">
+            <div class="stat-card">
+              <div class="stat-value">3</div>
+              <div class="stat-label">Booth Demos</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-value">6</div>
+              <div class="stat-label">Poster Presentations</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-value">5</div>
+              <div class="stat-label">Global MoBI Labs</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-value">100%</div>
+              <div class="stat-label">Open Source Software</div>
+            </div>
+          </div>
+
+          <div class="section-title">🔬 Lab Hardware & Sensor Modalities</div>
+          <div class="modality-tags">
+            ${labModalities.map(m => `<div class="modality-pill">${escapeHtml(m)}</div>`).join('')}
+          </div>
+
+          <div class="section-title">📅 Poster Session Calendar</div>
+          <div class="calendar-grid">
+            <div class="calendar-day-card">
+              <div class="calendar-day-header">
+                <span>Poster Session A</span>
+                <span style="font-size:0.8rem; font-weight:600; color:var(--text-muted);">• Wed 26 Aug 2026</span>
+              </div>
+              <div class="calendar-item" onclick="selectProject('poster-1')">
+                <div class="calendar-item-id">ID: A-IV-03</div>
+                <div class="calendar-item-title">The Open Methodology MoBI Laboratory</div>
+              </div>
+              <div class="calendar-item" onclick="selectProject('poster-2')">
+                <div class="calendar-item-id">ID: A-III-07</div>
+                <div class="calendar-item-title">MoBI-View: Realtime Biosignal Visualization for LSL</div>
+              </div>
+              <div class="calendar-item" onclick="selectProject('poster-3')">
+                <div class="calendar-item-id">ID: A-IV-06</div>
+                <div class="calendar-item-title">Automated Quality Control Framework (MOBI-QC)</div>
+              </div>
+              <div class="calendar-item" onclick="selectProject('poster-4')">
+                <div class="calendar-item-id">ID: A-IV-11</div>
+                <div class="calendar-item-title">Realtime Motion Capture as MoBI QC Mechanism</div>
+              </div>
+              <div class="calendar-item" onclick="selectProject('poster-6')">
+                <div class="calendar-item-id">ID: A-IV-02</div>
+                <div class="calendar-item-title">MoBI Laboratory In Practice: Examples from 2 Studies</div>
+              </div>
+            </div>
+
+            <div class="calendar-day-card">
+              <div class="calendar-day-header">
+                <span>Poster Session B</span>
+                <span style="font-size:0.8rem; font-weight:600; color:var(--text-muted);">• Thu 27 Aug 2026</span>
+              </div>
+              <div class="calendar-item" onclick="selectProject('poster-5')">
+                <div class="calendar-item-id">ID: B-III-06</div>
+                <div class="calendar-item-title">Replication of CAMI Study with Neurodivergent Pediatric Population</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="attendees-section">
+            <div class="section-title">👥 Lab Attendees & Presenters</div>
+            <div class="attendees-grid">
+              ${labAttendees.map(a => `
+                <div class="attendee-card">
+                  <div class="attendee-avatar">${escapeHtml(a.icon)}</div>
+                  <div class="attendee-name">${escapeHtml(a.name)}</div>
+                </div>
+              `).join('')}
+            </div>
+          </div>
+
+          <div class="section-title">📬 Lab Contact & Inquiries</div>
+          <div class="contact-grid">
+            ${labContacts.map(c => `
+              <div class="contact-card">
+                <div class="contact-icon">${escapeHtml(c.icon)}</div>
+                <div>
+                  <div class="contact-name">${escapeHtml(c.name)}</div>
+                  <a href="mailto:${escapeHtml(c.email)}" class="contact-email">${escapeHtml(c.email)}</a>
+                </div>
+              </div>
+            `).join('')}
+          </div>
+        `;
+        return;
+      }
+
+      // PROJECT DETAIL VIEW
+      const project = projectsData.find(p => p.id === currentSelectedId);
+      if (!project) return;
+
+      const badgeClass = project.type === 'booth' ? 'badge-booth' : 'badge-poster';
+
+      // Features list HTML
+      let featuresHtml = '';
+      if (project.features && project.features.length > 0) {
+        featuresHtml = `
+          <div class="section-title">✨ Key Highlights & Takeaways</div>
+          <ul class="feature-list">
+            ${project.features.map(f => `<li class="feature-item">${escapeHtml(f)}</li>`).join('')}
+          </ul>
+        `;
+      }
+
+      // Special Highlight Card (LSL)
+      let highlightHtml = '';
+      if (project.lslHighlight) {
+        highlightHtml = `
+          <div class="highlight-card">
+            <h4>${escapeHtml(project.lslHighlight.title)}</h4>
+            <p>${escapeHtml(project.lslHighlight.description)}</p>
+            <ul>
+              ${project.lslHighlight.bullets.map(b => `<li>${escapeHtml(b)}</li>`).join('')}
+            </ul>
+          </div>
+        `;
+      }
+
+      // Poster Section
+      let posterHtml = '';
+      if (project.poster || project.posterSession || project.posterUrl) {
+        const posterSrc = project.poster || 'posters/placeholder.png';
+        const isPdf = posterSrc.toLowerCase().endsWith('.pdf') || (project.posterUrl && project.posterUrl.toLowerCase().endsWith('.pdf'));
+        const pdfLink = project.posterUrl || posterSrc;
+        const sessionInfo = project.posterSession ? `<p style="margin-top:0.4rem; color:var(--accent-poster); font-size:0.95rem; font-weight:600;">📍 ${escapeHtml(project.posterSession)}</p>` : '';
+
+        if (isPdf) {
+          posterHtml = `
+            <div class="section-title">📄 Presentation Poster (PDF)</div>
+            ${sessionInfo}
+            <div class="poster-box">
+              <object data="${escapeHtml(posterSrc)}" type="application/pdf" class="pdf-embed">
+                <p style="color:var(--text-muted); padding:2rem;">
+                  PDF Preview loads locally via <code>${escapeHtml(posterSrc)}</code>.<br>
+                  <a href="${escapeHtml(pdfLink)}" target="_blank" class="pdf-btn">📄 Open Poster PDF</a>
+                </p>
+              </object>
+              <div style="margin-top:0.8rem;">
+                <a href="${escapeHtml(pdfLink)}" target="_blank" class="pdf-btn">📥 Open / Download Poster PDF</a>
+              </div>
+            </div>
+          `;
+        } else {
+          posterHtml = `
+            <div class="section-title">📄 Presentation Poster</div>
+            ${sessionInfo}
+            <div class="poster-box">
+              <img src="${escapeHtml(posterSrc)}" alt="Poster image for ${escapeHtml(project.title)}" class="poster-img" onerror="this.onerror=null; this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'600\' height=\'380\' viewBox=\'0 0 600 380\'><rect width=\'600\' height=\'380\' fill=\'%23152036\'/><text x=\'50%\' y=\'45%\' dominant-baseline=\'middle\' text-anchor=\'middle\' fill=\'%2338bdf8\' font-family=\'sans-serif\' font-size=\'18\' font-weight=\'bold\'>Poster File (${escapeHtml(posterSrc)})</text><text x=\'50%\' y=\'55%\' dominant-baseline=\'middle\' text-anchor=\'middle\' fill=\'%2394a3b8\' font-family=\'sans-serif\' font-size=\'14\'>Place local file in posters/ to display</text></svg>';" onclick="openModal(this.src)">
+              <p style="margin-top:0.6rem; font-size:0.85rem; color:var(--text-muted);">Click image to expand full poster view</p>
+            </div>
+          `;
+        }
+      }
+
+      // Image Gallery
+      let imagesHtml = '';
+      if (project.images && project.images.length > 0) {
+        imagesHtml = `
+          <div class="section-title">🖼️ Screenshots & Visuals</div>
+          <div class="media-grid">
+            ${project.images.map(img => `
+              <div class="media-card">
+                <img src="${escapeHtml(img.url)}" alt="${escapeHtml(img.caption)}" class="media-preview" onerror="this.onerror=null; this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'300\' height=\'180\' viewBox=\'0 0 300 180\'><rect width=\'600\' height=\'380\' fill=\'%23152036\'/><text x=\'50%\' y=\'50%\' dominant-baseline=\'middle\' text-anchor=\'middle\' fill=\'%2394a3b8\' font-family=\'sans-serif\' font-size=\'12\'>Screenshot: ${escapeHtml(img.url)}</text></svg>';" onclick="openModal(this.src)">
+                <div class="media-caption">${escapeHtml(img.caption)}</div>
+              </div>
+            `).join('')}
+          </div>
+        `;
+      }
+
+      const githubHtml = project.github ? `
+        <a href="${escapeHtml(project.github)}" target="_blank" class="github-link">
+          <svg height="18" width="18" viewBox="0 0 16 16" fill="currentColor">
+            <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.28.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/>
+          </svg>
+          View GitHub / Source Link
+        </a>
+      ` : '';
+
+      detailsContainer.innerHTML = `
+        <div class="project-header">
+          <div class="project-title-group">
+            <span class="badge ${badgeClass}">${escapeHtml(project.badgeText)}</span>
+            <h2>${escapeHtml(project.title)}</h2>
+            <div class="project-authors">👥 <strong>Authors / Presenters:</strong> ${escapeHtml(project.authors)}</div>
+          </div>
+          ${githubHtml}
+        </div>
+
+        <div class="section-title">💡 Overview & Abstract</div>
+        <div class="description-text">${escapeHtml(project.description)}</div>
+
+        ${featuresHtml}
+        ${highlightHtml}
+        ${posterHtml}
+        ${imagesHtml}
+      `;
+    }
+
+    function openModal(src) {
+      document.getElementById('modalImg').src = src;
+      document.getElementById('imageModal').classList.add('active');
+    }
+
+    function closeModal() {
+      document.getElementById('imageModal').classList.remove('active');
+    }
+
+    function escapeHtml(str) {
+      if (!str) return '';
+      return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+    }
+
+    // Initialize
+    renderProjectList();
+    renderProjectDetails();
+  </script>
+</body>
+</html>
